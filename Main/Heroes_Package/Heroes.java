@@ -6,7 +6,7 @@ import Main.Team;
 public abstract class Heroes extends GameObjects implements Runnable {
 
     Speed speed ;
-    boolean move = true ;
+    public boolean move = true ;
     boolean kill = false ;
 
 

@@ -6,14 +6,18 @@ import java.util.ArrayList;
 
 public class Team {
 
-    ArrayList<Heroes> heroes = new ArrayList<>();
+    ArrayList<GameObjects> gameObjects = new ArrayList<>();
 
     GameObjects castle;
     GameObjects enemyCastle;
 
-    public Team( GameObjects castle , GameObjects enemyCastle){
-        this.castle = castle ;
-        this.enemyCastle = enemyCastle ;
+    public Team(int castleX , int castleY){
+        this.castle = new GameObjects(this , 10000 , 0 , castleX , castleY );
+        gameObjects.add(this.castle);
+    }
+
+    public void setEnemyCastle(GameObjects enemyCastle){
+        this.enemyCastle = enemyCastle;
     }
 
     public GameObjects getEnemyCastle(){
