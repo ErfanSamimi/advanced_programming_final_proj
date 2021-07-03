@@ -1,3 +1,5 @@
+package Main;
+
 public class GameObjects {
 
     private int health ;
