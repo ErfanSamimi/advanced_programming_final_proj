@@ -5,12 +5,16 @@ public class GameObjects {
     private int health ;
     private int power ;
     private Team team;
+    private int locationX;
+    private int locationY;
     boolean continueCombat = true;
 
-    public GameObjects(Team team , int health , int power){
+    public GameObjects(Team team , int health , int power , int locationX , int locationY){
         this.health = health ;
         this.power = power ;
         this.team = team;
+        this.locationX = locationX ;
+        this.locationY = locationY;
     }
 
 
@@ -30,6 +34,20 @@ public class GameObjects {
         }
 
         continueCombat = true ;
+    }
+
+    public void setLocation(int x , int y){
+        this.locationY = y ;
+        this.locationX = x ;
+    }
+
+    public int[] getLocation(){
+        int[] location = new int[2];
+
+        location[0] = this.locationX;
+        location[1] = this.locationY;
+
+        return location ;
     }
 
 }
