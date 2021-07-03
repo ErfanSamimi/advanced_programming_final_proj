@@ -1,5 +1,7 @@
 package Main;
 
+import Main.Heroes_Package.Heroes;
+
 public class GameObjects {
 
     private int health ;
@@ -21,6 +23,14 @@ public class GameObjects {
 
     public void combat( GameObjects enemy ) throws InterruptedException {
 
+        if (this instanceof Heroes)
+            ((Heroes) this).move = false;
+
+        if (enemy instanceof Heroes)
+            ((Heroes) enemy).move = false;
+
+        //-------------------------------------------------
+
         while (continueCombat){
 
             this.health -= enemy.power;
@@ -29,10 +39,26 @@ public class GameObjects {
 
             enemy.health -= this.power;
 
-            if (this.health<=0 || enemy.health <=0)
+            if(this.health<=0 ){
+                this.killed = true;
                 break;
+            }
+
+            if (enemy.health <=0){
+                this.killed = true;
+                break;
+            }
+
 
         }
+
+        //-------------------------------------------------
+
+        if (this instanceof Heroes)
+            ((Heroes) this).move = true;
+
+        if (enemy instanceof Heroes)
+            ((Heroes) enemy).move = true;
 
         continueCombat = true ;
     }
@@ -61,6 +87,14 @@ public class GameObjects {
 
     public boolean isKilled(){
         return this.killed;
+    }
+
+    public boolean sameLocation(GameObjects obj){
+
+        if (this.locationY == obj.locationY && this.locationX == obj.locationX)
+            return true;
+
+        return false;
     }
 
 }
