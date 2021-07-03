@@ -8,6 +8,7 @@ public class GameObjects {
     private int locationX;
     private int locationY;
     boolean continueCombat = true;
+    boolean killed = false ;
 
     public GameObjects(Team team , int health , int power , int locationX , int locationY){
         this.health = health ;
@@ -48,6 +49,18 @@ public class GameObjects {
         location[1] = this.locationY;
 
         return location ;
+    }
+
+    public Team getTeam(){
+        return this.team;
+    }
+
+    public void kill(){
+        this.killed = true;
+    }
+
+    public boolean isKilled(){
+        return this.killed;
     }
 
 }
