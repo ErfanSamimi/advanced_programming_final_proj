@@ -10,10 +10,14 @@ public class Team {
 
     GameObjects castle;
     GameObjects enemyCastle;
+    String teamName ;
 
-    public Team(int castleX , int castleY){
+
+    public Team(int castleX , int castleY , String teamName ){
         this.castle = new GameObjects(this , 10000 , 0 , castleX , castleY );
         gameObjects.add(this.castle);
+
+        this.teamName = teamName;
     }
 
     public void setEnemyCastle(GameObjects enemyCastle){
@@ -22,6 +26,10 @@ public class Team {
 
     public GameObjects getEnemyCastle(){
         return this.enemyCastle;
+    }
+
+    public String getTeamName(){
+        return this.teamName;
     }
 
 }

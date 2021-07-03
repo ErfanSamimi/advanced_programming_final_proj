@@ -1,6 +1,7 @@
 package Main.Heroes_Package;
 
 import Main.GameObjects;
+import Main.Main;
 import Main.Team;
 
 public abstract class Heroes extends GameObjects implements Runnable {
@@ -29,32 +30,49 @@ public abstract class Heroes extends GameObjects implements Runnable {
             sleepTime = 1500;
 
 
+        Thread.sleep(sleepTime);
+        if (move){
 
-            if (move){
+            int heroLocX = this.getLocation()[0];
+            int heroLocY = this.getLocation()[1];
 
-                int heroLocX = this.getLocation()[0];
-                int heroLocY = this.getLocation()[1];
+            System.out.println(this.name + " current location ~> x : " + heroLocX + " | y : " + heroLocY );
 
-                int enemyLocX = this.getTeam().getEnemyCastle().getLocation()[0];
-                int enemyLocY = this.getTeam().getEnemyCastle().getLocation()[1];
+//                System.out.println(this.getTeam().getEnemyCastle());
+            int enemyLocX = this.getTeam().getEnemyCastle().getLocation()[0];
+            int enemyLocY = this.getTeam().getEnemyCastle().getLocation()[1];
 
-                int distanceX = Math.abs(enemyLocX - heroLocX);
-                int distanceY = Math.abs(enemyLocY - heroLocY);
+            int distanceX = Math.abs(enemyLocX - heroLocX);
+            int distanceY = Math.abs(enemyLocY - heroLocY);
 
-
-
-                if ( distanceX > distanceY)
-                    this.setLocation(heroLocX+1 , heroLocY);
-
-                else
-                    this.setLocation(heroLocX , heroLocY+1);
+            int number = 1 ;
 
 
+
+
+            if ( distanceX > distanceY) {
+                if (enemyLocX - heroLocX < 0)
+                    number = -1;
+                this.setLocation(heroLocX + number, heroLocY);
             }
 
-            Thread.sleep(sleepTime);
+            else {
+                if (enemyLocY - heroLocY < 0)
+                    number = -1;
+                this.setLocation(heroLocX, heroLocY + number);
+            }
+
+
+            heroLocX = this.getLocation()[0];
+            heroLocY = this.getLocation()[1];
+
+            System.out.println(this.name + " after move Location ~> x : " + heroLocX + " | y : " + heroLocY );
 
         }
+
+
+
+    }
 
 
 
@@ -62,7 +80,7 @@ public abstract class Heroes extends GameObjects implements Runnable {
     @Override
     public void run(){
 
-        while (! isKilled() ){
+        while (! isKilled() && !Main.gameFinished){
 
             try {
                 this.moveHero();
