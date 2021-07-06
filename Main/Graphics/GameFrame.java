@@ -6,6 +6,8 @@ package Main.Graphics;
  * and open the template in the editor.
  */
 
+import Main.Team;
+
 import java.awt.*;
 
 /**
@@ -60,6 +62,12 @@ public class GameFrame extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
+        jTextArea1.setBackground(new Color(76, 75, 75));
+        jTextArea2.setBackground(new Color(76, 75, 75));
+
+        jTextArea1.setForeground( new Color(58, 233, 76));
+        jTextArea2.setForeground( new Color(58, 233, 76) );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,8 +94,15 @@ public class GameFrame extends javax.swing.JFrame {
     }// </editor-fold>
 
 
-    public void changeColor(int x , int y , Color color){
-        jPanel1.changeColor(x , y , color);
+    public void changeColor(int x , int y , Color color , String name){
+        jPanel1.changeColor(x , y , color , name);
+    }
+
+
+
+    public void updateTeamsStatus(Team team1 , Team team2){
+        jTextArea1.setText(team1.getTeamStatus());
+        jTextArea2.setText(team2.getTeamStatus());
     }
 
     /**
