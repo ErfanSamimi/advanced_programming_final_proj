@@ -14,7 +14,7 @@ public class Team {
 
 
     public Team(int castleX , int castleY , String teamName ){
-        this.castle = new GameObjects(this , 10000 , 0 , castleX , castleY );
+        this.castle = new GameObjects(this , 10000 , 0 , castleX , castleY , 78 , 81 , 84 );
         gameObjects.add(this.castle);
 
         this.teamName = teamName;

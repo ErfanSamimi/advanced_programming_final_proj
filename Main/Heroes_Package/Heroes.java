@@ -11,8 +11,8 @@ public abstract class Heroes extends GameObjects implements Runnable {
     boolean kill = false ;
 
 
-    public Heroes (Team team , int power , int health , Speed speed , int locationX , int locationY ){
-        super(team , health , power , locationX , locationY);
+    public Heroes (Team team , int power , int health , Speed speed , int locationX , int locationY , int red , int green , int blue  ){
+        super(team , health , power , locationX , locationY , red , green , blue);
         this.speed = speed;
         Thread t = new Thread(this , "move hero");
         t.start();

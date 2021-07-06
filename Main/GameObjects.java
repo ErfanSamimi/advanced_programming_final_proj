@@ -2,6 +2,8 @@ package Main;
 
 import Main.Heroes_Package.*;
 
+import java.awt.*;
+
 public class GameObjects {
 
     static int number = 1;
@@ -16,13 +18,15 @@ public class GameObjects {
     public String name;
     boolean combating = false ;
     static Object lockObj = new Object();
+    Color color;
 
-    public GameObjects(Team team , int health , int power , int locationX , int locationY){
+    public GameObjects(Team team , int health , int power , int locationX , int locationY , int red , int green , int blue){
         this.health = health ;
         this.power = power ;
         this.team = team;
         this.locationX = locationX ;
         this.locationY = locationY;
+        this.color = new Color(red , green , blue);
 
 
         if(this instanceof IceHero)
