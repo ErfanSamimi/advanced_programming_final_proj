@@ -1,5 +1,6 @@
 package Main;
 
+import Main.Graphics.GameFrame;
 import Main.Heroes_Package.*;
 import org.w3c.dom.ls.LSOutput;
 
@@ -9,9 +10,14 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static   GameFrame gameFrame = new GameFrame();
+
     public static boolean gameFinished = false;
 
     public static void main(String[] args) throws FileNotFoundException {
+
+
+        gameFrame.setVisible(true);
 
         Team team1 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0 , "team 1");
         Team team2 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9 , "team 2");
@@ -32,15 +38,15 @@ public class Main {
 //        team1.enemyCastle = team2.castle;
 //        team2.enemyCastle = team1.castle;
 //
-//        IceHero ice1 = new IceHero(team1 , 9 , 9 );
+//        IceHero ice1 = new IceHero(team1 , 5 , 4 );
 //        ice1.name = "Ice 1";
-////        IceHero ice2 = new IceHero(team2 , 0 , 1 );
-////        ice2.name = "Ice 2";
-//        FireHero f1 = new FireHero(team1 , 9 , 9);
+//        IceHero ice2 = new IceHero(team2 , 0 , 1 );
+//        ice2.name = "Ice 2";
+//        FireHero f1 = new FireHero(team1 , 2 , 3);
 //        f1.name = "Fire 1";
 //
 //        team1.gameObjects.add(ice1);
-////        team2.gameObjects.add(ice2);
+//        team2.gameObjects.add(ice2);
 //        team1.gameObjects.add(f1);
 
 

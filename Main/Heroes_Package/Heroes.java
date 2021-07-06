@@ -1,6 +1,7 @@
 package Main.Heroes_Package;
 
 import Main.GameObjects;
+import Main.Graphics.GameBoardPanel;
 import Main.Main;
 import Main.Team;
 
@@ -62,9 +63,10 @@ public abstract class Heroes extends GameObjects implements Runnable {
                 this.setLocation(heroLocX, heroLocY + number);
             }
 
-
+            Main.gameFrame.changeColor(heroLocX , heroLocY , GameBoardPanel.defaultColor);
             heroLocX = this.getLocation()[0];
             heroLocY = this.getLocation()[1];
+            Main.gameFrame.changeColor(heroLocX ,heroLocY , this.color);
 
             System.out.println(this.name + " after move Location ~> x : " + heroLocX + " | y : " + heroLocY );
 

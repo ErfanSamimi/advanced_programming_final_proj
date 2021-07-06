@@ -18,7 +18,7 @@ public class GameObjects {
     public String name;
     boolean combating = false ;
     static Object lockObj = new Object();
-    Color color;
+    public Color color;
 
     public GameObjects(Team team , int health , int power , int locationX , int locationY , int red , int green , int blue){
         this.health = health ;
@@ -27,7 +27,7 @@ public class GameObjects {
         this.locationX = locationX ;
         this.locationY = locationY;
         this.color = new Color(red , green , blue);
-
+        Main.gameFrame.changeColor(locationX , locationY , this.color);
 
         if(this instanceof IceHero)
             this.name = team.teamName + " IceHero " + number;
