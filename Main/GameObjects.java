@@ -1,10 +1,12 @@
 package Main;
 
+import Main.Graphics.GameBoardPanel;
+import Main.Graphics.GameFrame;
 import Main.Heroes_Package.*;
 
 import java.awt.*;
 
-public class GameObjects {
+public abstract class GameObjects {
 
     static int number = 1;
 
@@ -17,7 +19,7 @@ public class GameObjects {
     boolean killed = false ;
     public String name;
     boolean combating = false ;
-    static Object lockObj = new Object();
+    Object lockObj = new Object();
     public Color color;
 
     public GameObjects(Team team , int health , int power , int locationX , int locationY , int red , int green , int blue){
@@ -27,7 +29,7 @@ public class GameObjects {
         this.locationX = locationX ;
         this.locationY = locationY;
         this.color = new Color(red , green , blue);
-        Main.gameFrame.changeColor(locationX , locationY , this.color);
+        Main.gameFrame.changeColor(locationX , locationY , this.color , team.getTeamName());
 
         if(this instanceof IceHero)
             this.name = team.teamName + " IceHero " + number;
@@ -44,67 +46,84 @@ public class GameObjects {
     }
 
 
+
     public void combat( GameObjects enemy ) throws InterruptedException {
 
-        this.combating = true;
-        enemy.combating =true;
 
-        if (this instanceof Heroes)
+
+
+        if ( !(this  instanceof  Castle)) {
             ((Heroes) this).move = false;
+//            this.combating = true;
+        }
 
-        if (enemy instanceof Heroes)
+        if (!(enemy instanceof Castle)) {
             ((Heroes) enemy).move = false;
+//            enemy.combating =true;
+        }
+
+//        System.out.println(enemy.combating);
+//        System.out.println(this.combating);
 
         //-------------------------------------------------
 
-        while (continueCombat){
+
+
+        while (continueCombat && ! Main.gameFinished ){
 
 
 
 
 
-            synchronized (lockObj) {
-                System.out.println("++++  " + this.name + " and " + enemy.name + " combating ");
-                this.health -= enemy.power;
+//            synchronized (lockObj) {
+            System.out.println("++++  " + this.name + " and " + enemy.name + " combating | " + this.name + " Health : " + this.health + " | " + enemy.name + " Health : " + enemy.health  );
+            this.health -= enemy.power;
 
-                Thread.sleep(1000);
+            Main.gameFrame.changeColor(locationX ,locationY , new Color(187, 0, 255), "");
 
-                enemy.health -= this.power;
+            Thread.sleep(2000);
+
+            enemy.health -= this.power;
 
 
-                System.out.println(this.name + " Health : " + this.health);
-                System.out.println(enemy.name + " Health : " + enemy.health);
-            }
+
+
+
+//            }
 
             if(this.health<=0 ){
                 this.killed = true;
 //                this.team.gameObjects.remove(this);
 
-                System.out.println("xxx");
+                System.out.println("x");
                 enemy.combating = false;
                 continueCombat = false;
+                Main.gameFrame.changeColor(this.locationX ,this.locationY , GameBoardPanel.defaultColor , "");
             }
 
             if (enemy.health <=0){
                 enemy.killed = true;
-                System.out.println("xxx");
+                System.out.println("x");
 
 //                enemy.team.gameObjects.remove(enemy);
-                this.combating = true;
+                this.combating = false;
                 continueCombat = false;
-
+                Main.gameFrame.changeColor(this.locationX ,this.locationY , GameBoardPanel.defaultColor , "");
             }
 
+            Main.gameFrame.updateTeamsStatus(this.team , enemy.team);
 
         }
 
         //-------------------------------------------------
 
-        if (this instanceof Heroes)
+        if (this instanceof Heroes && ! this.killed )
             ((Heroes) this).move = true;
 
-        if (enemy instanceof Heroes)
+        if (enemy instanceof Heroes && ! enemy.killed)
             ((Heroes) enemy).move = true;
+
+//        Main.gameFrame.changeColor(this.locationX ,this.locationY , GameBoardPanel.defaultColor , "");
 
         continueCombat = true ;
     }
@@ -141,6 +160,10 @@ public class GameObjects {
             return true;
 
         return false;
+    }
+
+    public int getHealth(){
+        return this.health;
     }
 
 }
