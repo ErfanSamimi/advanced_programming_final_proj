@@ -2,10 +2,11 @@ package Main;
 
 import Main.Graphics.GameFrame;
 import Main.Heroes_Package.*;
-import org.w3c.dom.ls.LSOutput;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ConcurrentModificationException;
 import java.util.Scanner;
 
 public class Main {
@@ -19,8 +20,8 @@ public class Main {
 
         gameFrame.setVisible(true);
 
-        Team team1 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0 , "team 1");
-        Team team2 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9 , "team 2");
+        Team team1 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0 , "1");
+        Team team2 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9 , "2");
 
         team1.enemyCastle = team2.castle;
         team2.enemyCastle = team1.castle;
@@ -29,26 +30,27 @@ public class Main {
         addHeroes(team2 ,"/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9  );
 
 
-//        Team team1 = new Team(0,0 , "team 1");
+//        Team team1 = new Team(0,0 , "1");
 //        team1.castle.name = "Team1 castle";
 //
-//        Team team2 = new Team(9,9 , "team 2");
+//        Team team2 = new Team(9,9 , "2");
 //        team2.castle.name = "Team2 castle";
 //
 //        team1.enemyCastle = team2.castle;
 //        team2.enemyCastle = team1.castle;
 //
-//        IceHero ice1 = new IceHero(team1 , 5 , 4 );
-//        ice1.name = "Ice 1";
-//        IceHero ice2 = new IceHero(team2 , 0 , 1 );
-//        ice2.name = "Ice 2";
-//        FireHero f1 = new FireHero(team1 , 2 , 3);
-//        f1.name = "Fire 1";
+//       // ----------------------------------
 //
-//        team1.gameObjects.add(ice1);
-//        team2.gameObjects.add(ice2);
+//        WindHero f1 = new WindHero(team1 , 5 , 5);
 //        team1.gameObjects.add(f1);
+//
+//        FireHero f2 = new FireHero(team2 , 5, 5);
+//        team2.gameObjects.add(f2);
 
+
+
+
+        gameFrame.updateTeamsStatus(team1,team2);
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -59,6 +61,7 @@ public class Main {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                catch (ConcurrentModificationException e){}
 
             }
         });
@@ -70,8 +73,6 @@ public class Main {
 
     static Team getTeam(String fileAddress , int numberX , int numberY , String name) throws FileNotFoundException {
 
-//        int counter = -1;
-//        Team team = null;
 
         FileInputStream fin = new FileInputStream(fileAddress);
 
@@ -84,9 +85,7 @@ public class Main {
         int x  = Math.abs(numberX -  Integer.parseInt(str[0]));
         int y = Math.abs(numberY - Integer.parseInt(str[1]) );
 
-        Team team = new Team(x, y , name);
-
-        return team;
+        return new Team(x, y , name);
 
     }
 
@@ -149,12 +148,14 @@ public class Main {
             if (team1.castle.killed) {
                 System.out.println("-*-*-*-*-*-*-*-* Team 1 lose the game -*-*-*-*-*-*-*-* ");
                 continueChecking = false;
+//                System.exit(0);
             }
 
 //            System.out.println(team2.castle.killed);
             if (team2.castle.killed) {
                 System.out.println("-*-*-*-*-*-*-*-* Team 2 lose the game -*-*-*-*-*-*-*-*");
                 continueChecking = false;
+//                System.exit(0);
             }
 
 //            System.out.println("++");
@@ -162,10 +163,13 @@ public class Main {
 
                 for (GameObjects g2 : team2.gameObjects) {
 
-                    if (g1.sameLocation(g2) && !g1.killed && !g2.killed &&!g1.combating   ) {
+                    if (g1.sameLocation(g2) && !g1.killed && !g2.killed && !g1.combating && ! g2.combating   ) {
 //                        System.out.println("-----");
-                        g1.combating = true;
-                        g2.combating = true;
+
+                        if (! (g1 instanceof Castle ))
+                            g1.combating = true;
+                        if (! (g2 instanceof  Castle))
+                            g2.combating = true;
 
                         Thread t = new Thread(new Runnable() {
                             @Override
@@ -178,7 +182,9 @@ public class Main {
                                 }
                             }
                         });
+
                         t.start();
+
 
 
                     }

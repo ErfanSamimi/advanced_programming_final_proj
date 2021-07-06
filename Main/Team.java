@@ -1,6 +1,6 @@
 package Main;
 
-import Main.Heroes_Package.Heroes;
+import Main.Heroes_Package.*;
 
 import java.util.ArrayList;
 
