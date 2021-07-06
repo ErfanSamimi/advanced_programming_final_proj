@@ -8,19 +8,21 @@ public class Team {
 
     ArrayList<GameObjects> gameObjects = new ArrayList<>();
 
-    GameObjects castle;
-    GameObjects enemyCastle;
+    Castle castle;
+    Castle enemyCastle;
     String teamName ;
 
 
     public Team(int castleX , int castleY , String teamName ){
-        this.castle = new GameObjects(this , 10000 , 0 , castleX , castleY , 78 , 81 , 84 );
-        gameObjects.add(this.castle);
 
         this.teamName = teamName;
+        this.castle = new Castle(this , 10000 , 0 , castleX , castleY , 78 , 81 , 84 );
+        gameObjects.add(this.castle);
+
+
     }
 
-    public void setEnemyCastle(GameObjects enemyCastle){
+    public void setEnemyCastle(Castle enemyCastle){
         this.enemyCastle = enemyCastle;
     }
 
