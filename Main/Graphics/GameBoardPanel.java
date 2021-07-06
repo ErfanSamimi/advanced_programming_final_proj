@@ -47,9 +47,11 @@ public class GameBoardPanel extends JPanel {
 
     }
 
-    public void changeColor(int x , int y , Color color){
+    public void changeColor(int x , int y , Color color , String name){
         this.buttons[x][y].setBackground(color);
+        this.buttons[x][y].setText(name);
     }
+
 
 //    void myFunction() throws InterruptedException {
 //
