@@ -34,4 +34,35 @@ public class Team {
         return this.teamName;
     }
 
+    public String getTeamStatus(){
+
+        String str = "";
+        str += "Team Number : "+ this.teamName + "\n";
+
+
+        for (GameObjects g : this.gameObjects){
+
+            if (g.killed)
+                continue;
+
+            if(g instanceof EarthHero)
+                str += "Earth Hero Health : " + g.getHealth() + "\n" ;
+
+            else if ( g instanceof FireHero)
+                str += "Fire Hero Health : " + g.getHealth() + "\n" ;
+
+            else if (g instanceof IceHero)
+                str += "Ice Hero Health : " + g.getHealth() + "\n" ;
+
+            else if (g instanceof WindHero)
+                str += "Wind Hero Health : " + g.getHealth() + "\n" ;
+
+            else
+                str += "Castle Health : " + g.getHealth() + "\n" ;
+        }
+
+        return str;
+
+    }
+
 }
