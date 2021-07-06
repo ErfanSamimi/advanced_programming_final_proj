@@ -12,6 +12,9 @@ public abstract class Heroes extends GameObjects implements Runnable {
     boolean kill = false ;
 
 
+    //--------------------------------------------------------------------------------------------------
+
+
     public Heroes (Team team , int power , int health , Speed speed , int locationX , int locationY , int red , int green , int blue  ){
         super(team , health , power , locationX , locationY , red , green , blue);
         this.speed = speed;
@@ -19,27 +22,33 @@ public abstract class Heroes extends GameObjects implements Runnable {
         t.start();
     }
 
+    //--------------------------------------------------------------------------------------------------
 
     void moveHero() throws InterruptedException {
 
         long sleepTime ;
 
         if(this.speed.equals(Speed.SLOW))
-            sleepTime = 3000;
+            sleepTime = 6000;
 
         else
-            sleepTime = 1500;
+            sleepTime = 3000;
 
 
         Thread.sleep(sleepTime);
-        if (move){
+
+
+
+
+
+        if (move && ! isKilled() && !Main.gameFinished){
+
 
             int heroLocX = this.getLocation()[0];
             int heroLocY = this.getLocation()[1];
 
             System.out.println(this.name + " current location ~> x : " + heroLocX + " | y : " + heroLocY );
 
-//                System.out.println(this.getTeam().getEnemyCastle());
             int enemyLocX = this.getTeam().getEnemyCastle().getLocation()[0];
             int enemyLocY = this.getTeam().getEnemyCastle().getLocation()[1];
 
@@ -52,21 +61,27 @@ public abstract class Heroes extends GameObjects implements Runnable {
 
 
             if ( distanceX > distanceY) {
+
                 if (enemyLocX - heroLocX < 0)
                     number = -1;
+
                 this.setLocation(heroLocX + number, heroLocY);
             }
 
             else {
+
                 if (enemyLocY - heroLocY < 0)
                     number = -1;
+
                 this.setLocation(heroLocX, heroLocY + number);
             }
 
-            Main.gameFrame.changeColor(heroLocX , heroLocY , GameBoardPanel.defaultColor);
+            Main.gameFrame.changeColor(heroLocX , heroLocY , GameBoardPanel.defaultColor , "");  // set last location color to default
+
             heroLocX = this.getLocation()[0];
             heroLocY = this.getLocation()[1];
-            Main.gameFrame.changeColor(heroLocX ,heroLocY , this.color);
+
+            Main.gameFrame.changeColor(heroLocX ,heroLocY , this.color , this.getTeam().getTeamName()); // update new location color
 
             System.out.println(this.name + " after move Location ~> x : " + heroLocX + " | y : " + heroLocY );
 
