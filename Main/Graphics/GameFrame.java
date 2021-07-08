@@ -159,6 +159,7 @@ public class GameFrame extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        System.exit(0);
     }
 
 
