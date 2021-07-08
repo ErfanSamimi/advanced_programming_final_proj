@@ -108,7 +108,7 @@ public abstract class GameObjects {
 //                enemy.team.gameObjects.remove(enemy);
                 this.combating = false;
                 continueCombat = false;
-                Main.gameFrame.changeColor(this.locationX ,this.locationY , GameBoardPanel.defaultColor , "");
+                Main.gameFrame.changeColor(enemy.locationX ,enemy.locationY , GameBoardPanel.defaultColor , "");
             }
 
             Main.gameFrame.updateTeamsStatus(this.team , enemy.team);

@@ -15,13 +15,16 @@ public class Main {
 
     public static boolean gameFinished = false;
 
+    public static Team team1;
+    public static Team team2 ;
+
     public static void main(String[] args) throws FileNotFoundException {
 
 
         gameFrame.setVisible(true);
 
-        Team team1 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0 , "1");
-        Team team2 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9 , "2");
+         team1 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0 , "1");
+         team2 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9 , "2");
 
         team1.enemyCastle = team2.castle;
         team2.enemyCastle = team1.castle;

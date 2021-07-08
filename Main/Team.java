@@ -34,6 +34,10 @@ public class Team {
         return this.teamName;
     }
 
+    public ArrayList<GameObjects> getGameObjects(){
+        return this.gameObjects;
+    }
+
     public String getTeamStatus(){
 
         String str = "";

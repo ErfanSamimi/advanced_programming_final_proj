@@ -6,6 +6,8 @@ package Main.Graphics;
  * and open the template in the editor.
  */
 
+import Main.Heroes_Package.Heroes;
+import Main.Main;
 import Main.Team;
 
 import java.awt.*;
@@ -144,17 +146,21 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
 
+
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        Heroes.startMovingTeamObjects(Main.team1);
+        Heroes.startMovingTeamObjects(Main.team2);
     }
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+
 
 
     public void updateTeamsStatus(Team team1 , Team team2){

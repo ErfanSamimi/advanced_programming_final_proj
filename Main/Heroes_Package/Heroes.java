@@ -1,9 +1,9 @@
 package Main.Heroes_Package;
 
-import Main.GameObjects;
+
 import Main.Graphics.GameBoardPanel;
-import Main.Main;
-import Main.Team;
+import Main.*;
+
 
 public abstract class Heroes extends GameObjects implements Runnable {
 
@@ -18,11 +18,25 @@ public abstract class Heroes extends GameObjects implements Runnable {
     public Heroes (Team team , int power , int health , Speed speed , int locationX , int locationY , int red , int green , int blue  ){
         super(team , health , power , locationX , locationY , red , green , blue);
         this.speed = speed;
-        Thread t = new Thread(this , "move hero");
-        t.start();
+//        Thread t = new Thread(this , "move hero");
+//        t.start();
     }
 
     //--------------------------------------------------------------------------------------------------
+
+    public static void startMovingTeamObjects(Team team){
+
+        for (GameObjects g : team.getGameObjects()){
+
+            if (g instanceof Castle)
+                continue;
+
+            Thread t = new Thread((Heroes)g, "move hero");
+            t.start();
+        }
+
+
+    }
 
     void moveHero() throws InterruptedException {
 
