@@ -4,8 +4,10 @@ package Main.Heroes_Package;
 import Main.Graphics.GameBoardPanel;
 import Main.*;
 
+import java.io.Serializable;
 
-public abstract class Heroes extends GameObjects implements Runnable {
+
+public abstract class Heroes extends GameObjects implements Runnable , Serializable {
 
     Speed speed ;
     public boolean move = true ;

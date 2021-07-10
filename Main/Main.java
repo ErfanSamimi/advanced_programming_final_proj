@@ -6,6 +6,8 @@ import Main.Heroes_Package.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ConcurrentModificationException;
 import java.util.Scanner;
 
@@ -18,20 +20,44 @@ public class Main {
     public static Team team1;
     public static Team team2 ;
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
+
+
+        FileInputStream fin = new FileInputStream("/home/erfan/Projects/Java/Files/FinalProject/savedGame.txt");
+        ObjectInputStream objIn = new ObjectInputStream(fin);
+
+        try {
+            team1 = (Team) objIn.readObject();
+            team2 = (Team) objIn.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (GameObjects g : team1.getGameObjects()){
+            gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
+        }
+        for (GameObjects g : team2.getGameObjects()){
+            gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
+        }
 
 
         gameFrame.setVisible(true);
 
-         team1 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0 , "1");
-         team2 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9 , "2");
 
-        team1.enemyCastle = team2.castle;
-        team2.enemyCastle = team1.castle;
+        //======================================================================================================================
 
-        addHeroes(team1 ,"/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0  );
-        addHeroes(team2 ,"/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9  );
+//         team1 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0 , "1");
+//         team2 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9 , "2");
+//
+//        team1.enemyCastle = team2.castle;
+//        team2.enemyCastle = team1.castle;
+//
+//        addHeroes(team1 ,"/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0  );
+//        addHeroes(team2 ,"/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9  );
 
+
+
+        //======================================================================================================================
 
 //        Team team1 = new Team(0,0 , "1");
 //        team1.castle.name = "Team1 castle";
@@ -71,7 +97,6 @@ public class Main {
         t.start();
 
     }
-
 
 
     static Team getTeam(String fileAddress , int numberX , int numberY , String name) throws FileNotFoundException {

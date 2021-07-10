@@ -5,8 +5,9 @@ import Main.Graphics.GameFrame;
 import Main.Heroes_Package.*;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class GameObjects {
+public abstract class GameObjects implements Serializable {
 
     static int number = 1;
 
@@ -19,7 +20,7 @@ public abstract class GameObjects {
     boolean killed = false ;
     public String name;
     boolean combating = false ;
-    Object lockObj = new Object();
+//    Object lockObj = new Object();
     public Color color;
 
     public GameObjects(Team team , int health , int power , int locationX , int locationY , int red , int green , int blue){

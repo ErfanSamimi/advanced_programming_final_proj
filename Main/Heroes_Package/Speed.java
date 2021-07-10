@@ -1,5 +1,7 @@
 package Main.Heroes_Package;
 
-public enum Speed {
+import java.io.Serializable;
+
+public enum Speed implements Serializable {
     FAST , SLOW ;
 }

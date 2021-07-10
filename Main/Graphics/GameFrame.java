@@ -11,6 +11,9 @@ import Main.Main;
 import Main.Team;
 
 import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  *
@@ -77,7 +80,11 @@ public class GameFrame extends javax.swing.JFrame {
         saveButton.setLabel("Save Game");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
+                try {
+                    saveButtonActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -147,8 +154,14 @@ public class GameFrame extends javax.swing.JFrame {
 
 
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         // TODO add your handling code here:
+        FileOutputStream fout = new FileOutputStream("/home/erfan/Projects/Java/Files/FinalProject/savedGame.txt");
+
+        ObjectOutputStream objOut = new ObjectOutputStream(fout);
+
+        objOut.writeObject(Main.team1);
+        objOut.writeObject(Main.team2);
     }
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {
