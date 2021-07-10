@@ -166,6 +166,9 @@ public class GameFrame extends javax.swing.JFrame {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+
+        Main.startGame();
+
         Heroes.startMovingTeamObjects(Main.team1);
         Heroes.startMovingTeamObjects(Main.team2);
     }

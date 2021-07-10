@@ -1,9 +1,11 @@
 package Main;
 
 import Main.Graphics.GameFrame;
+import Main.Graphics.RestoreDialog;
 import Main.Heroes_Package.*;
 
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,25 +25,27 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        FileInputStream fin = new FileInputStream("/home/erfan/Projects/Java/Files/FinalProject/savedGame.txt");
-        ObjectInputStream objIn = new ObjectInputStream(fin);
+        new RestoreDialog(new JFrame() , true);
 
-        try {
-            team1 = (Team) objIn.readObject();
-            team2 = (Team) objIn.readObject();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        FileInputStream fin = new FileInputStream("/home/erfan/Projects/Java/Files/FinalProject/savedGame.txt");
+//        ObjectInputStream objIn = new ObjectInputStream(fin);
+//
+//        try {
+//            team1 = (Team) objIn.readObject();
+//            team2 = (Team) objIn.readObject();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        for (GameObjects g : team1.getGameObjects()){
+//            gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
+//        }
+//        for (GameObjects g : team2.getGameObjects()){
+//            gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
+//        }
 
-        for (GameObjects g : team1.getGameObjects()){
-            gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
-        }
-        for (GameObjects g : team2.getGameObjects()){
-            gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
-        }
 
-
-        gameFrame.setVisible(true);
+//        gameFrame.setVisible(true);
 
 
         //======================================================================================================================
@@ -95,6 +99,7 @@ public class Main {
             }
         });
         t.start();
+
 
     }
 
@@ -161,8 +166,63 @@ public class Main {
 
     }
 
+    public static void restoreGame() throws IOException {
+
+        FileInputStream fin = new FileInputStream("/home/erfan/Projects/Java/Files/FinalProject/savedGame.txt");
+        ObjectInputStream objIn = new ObjectInputStream(fin);
+
+        try {
+            team1 = (Team) objIn.readObject();
+            team2 = (Team) objIn.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+
+        for (GameObjects g : team1.getGameObjects()){
+            if (g.killed)
+                continue;
+            gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
+        }
+        for (GameObjects g : team2.getGameObjects()){
+            if (g.killed)
+                continue;
+            gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
+        }
 
 
+    }
+
+    public static void newGame() throws FileNotFoundException {
+
+        team1 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0 , "1");
+         team2 = getTeam("/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9 , "2");
+
+        team1.enemyCastle = team2.castle;
+        team2.enemyCastle = team1.castle;
+
+        addHeroes(team1 ,"/home/erfan/Projects/Java/Files/FinalProject/team1.txt" , 0 , 0  );
+        addHeroes(team2 ,"/home/erfan/Projects/Java/Files/FinalProject/team2.txt" , 9 , 9  );
+
+    }
+
+    public static void startGame(){
+        gameFrame.updateTeamsStatus(team1,team2);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    checkingGame(team1 , team2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                catch (ConcurrentModificationException e){}
+
+            }
+        });
+        t.start();
+    }
 
 
     static void checkingGame(Team team1 , Team team2) throws InterruptedException {
