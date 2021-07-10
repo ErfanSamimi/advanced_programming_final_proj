@@ -2,7 +2,6 @@ package Main.Graphics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class GameBoardPanel extends JPanel {
 
@@ -52,54 +51,6 @@ public class GameBoardPanel extends JPanel {
         this.buttons[x][y].setText(name);
     }
 
-
-//    void myFunction() throws InterruptedException {
-//
-////        while (true){
-////
-////            for (int i=0 ; i<buttons.length ; i++){
-////                for(int j=0 ; j<buttons[i].length ; j++){
-////                    Thread.sleep(100);
-////                    buttons[i][j].setBackground(randomColor());
-////                }
-////            }
-////        }
-//
-//
-//
-//        while (true){
-//
-//            Thread.sleep(20);
-//
-//            Random rand = new Random();
-//            int x = Math.abs(rand.nextInt()%10);
-//            int y =Math.abs(rand.nextInt()%10);
-//
-//            buttons[x][y].setBackground(randomColor());
-//
-//        }
-//
-//
-//    }
-//
-//    Color randomColor(){
-//        Random rand = new Random();
-//        float r = rand.nextFloat();
-//        float g = rand.nextFloat();
-//        float b = rand.nextFloat();
-//
-//        return  new Color(r, g, b);
-//
-//    }
-
-
-    public static void main(String [] args){
-
-        GameBoardPanel f = new GameBoardPanel();
-//        f.setVisible(true);
-
-
-    }
 
 }
 

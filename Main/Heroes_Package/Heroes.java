@@ -45,10 +45,10 @@ public abstract class Heroes extends GameObjects implements Runnable , Serializa
         long sleepTime ;
 
         if(this.speed.equals(Speed.SLOW))
-            sleepTime = 6000;
+            sleepTime = 3000;
 
         else
-            sleepTime = 3000;
+            sleepTime = 1500;
 
 
         Thread.sleep(sleepTime);
