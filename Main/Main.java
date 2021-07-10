@@ -1,5 +1,6 @@
 package Main;
 
+import Main.Graphics.GameFinishedDialog;
 import Main.Graphics.GameFrame;
 import Main.Graphics.RestoreDialog;
 import Main.Heroes_Package.*;
@@ -83,22 +84,22 @@ public class Main {
 
 
 
-        gameFrame.updateTeamsStatus(team1,team2);
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    checkingGame(team1 , team2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                catch (ConcurrentModificationException e){}
-
-            }
-        });
-        t.start();
+//        gameFrame.updateTeamsStatus(team1,team2);
+//
+//        Thread t = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                try {
+//                    checkingGame(team1 , team2);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                catch (ConcurrentModificationException e){}
+//
+//            }
+//        });
+//        t.start();
 
 
     }
@@ -226,6 +227,7 @@ public class Main {
 
 
     static void checkingGame(Team team1 , Team team2) throws InterruptedException {
+
         boolean continueChecking = true;
 
         while (continueChecking) {
@@ -237,6 +239,9 @@ public class Main {
                 System.out.println("-*-*-*-*-*-*-*-* Team 1 lose the game -*-*-*-*-*-*-*-* ");
                 continueChecking = false;
 //                System.exit(0);
+                gameFinished = true;
+                gameFrame.setVisible(false);
+                new GameFinishedDialog(new JFrame() , true , "Team 2 Wins");
             }
 
 //            System.out.println(team2.castle.killed);
@@ -244,6 +249,9 @@ public class Main {
                 System.out.println("-*-*-*-*-*-*-*-* Team 2 lose the game -*-*-*-*-*-*-*-*");
                 continueChecking = false;
 //                System.exit(0);
+                gameFinished = true;
+                gameFrame.setVisible(false);
+                new GameFinishedDialog(new JFrame() , true , "Team 1 Wins");
             }
 
 //            System.out.println("++");
@@ -285,7 +293,7 @@ public class Main {
 
             gameFinished = true;
 
-//        System.out.println("++ finished");
+        System.out.println("++ finished");
 
     }
 }
