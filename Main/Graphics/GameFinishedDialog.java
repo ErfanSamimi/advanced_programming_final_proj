@@ -6,6 +6,8 @@ package Main.Graphics;
  * and open the template in the editor.
  */
 
+import javax.swing.*;
+
 /**
  *
  * @author erfan
@@ -15,9 +17,9 @@ public class GameFinishedDialog extends javax.swing.JDialog {
     /**
      * Creates new form GameFinishedDialog
      */
-    public GameFinishedDialog(java.awt.Frame parent, boolean modal , String msg) {
+    public GameFinishedDialog(  String msg) {
 
-        super(parent, modal);
+        super(new JFrame(), true);
         initComponents();
         msgLabel.setText(msg);
         setVisible(true);

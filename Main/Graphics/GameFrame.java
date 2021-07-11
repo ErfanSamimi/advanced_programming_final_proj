@@ -145,6 +145,12 @@ public class GameFrame extends javax.swing.JFrame {
 
         Main.startGame();
 
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         Heroes.startMovingTeamObjects(Main.team1);
         Heroes.startMovingTeamObjects(Main.team2);
     }

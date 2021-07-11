@@ -1,9 +1,10 @@
 package Main;
 
-import Main.Heroes_Package.*;
+import Main.Heroes_Package.Heroes;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 public class Team implements Serializable {
 
@@ -17,7 +18,7 @@ public class Team implements Serializable {
     public Team(int castleX , int castleY , String teamName ){
 
         this.teamName = teamName;
-        this.castle = new Castle(this , 10000 , 0 , castleX , castleY , 78 , 81 , 84 );
+        this.castle = new Castle(this , 10000 , 500 , castleX , castleY , 78 , 81 , 84 );
         gameObjects.add(this.castle);
 
 
@@ -50,24 +51,24 @@ public class Team implements Serializable {
             if (g.killed)
                 continue;
 
-            if(g instanceof EarthHero)
-                str += "Earth Hero Health : " + g.getHealth() + "\n" ;
+            str += g.name + " Health : " + g.getHealth() + " \n";
 
-            else if ( g instanceof FireHero)
-                str += "Fire Hero Health : " + g.getHealth() + "\n" ;
-
-            else if (g instanceof IceHero)
-                str += "Ice Hero Health : " + g.getHealth() + "\n" ;
-
-            else if (g instanceof WindHero)
-                str += "Wind Hero Health : " + g.getHealth() + "\n" ;
-
-            else
-                str += "Castle Health : " + g.getHealth() + "\n" ;
         }
 
         return str;
 
+    }
+
+    public int getNumberOfAliveHeroes(){
+
+        int counter =0;
+
+        for (GameObjects g : this.gameObjects){
+            if (g instanceof Heroes && !g.killed )
+                counter++;
+        }
+
+        return counter;
     }
 
 }

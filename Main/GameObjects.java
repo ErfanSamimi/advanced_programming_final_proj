@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 public abstract class GameObjects implements Serializable {
 
-    static int number = 1;
+    private static int number = 1;  //Use for naming GameObjects
 
     private int health ;
     private int power ;
@@ -46,7 +46,6 @@ public abstract class GameObjects implements Serializable {
     }
 
 
-
     public void combat( GameObjects enemy ) throws InterruptedException {
 
 
@@ -66,23 +65,24 @@ public abstract class GameObjects implements Serializable {
 
 
 
-        while (continueCombat && ! Main.gameFinished ){
+        while ((  !enemy.killed || !this.killed  ) && ! Main.gameFinished ){
 
 
 
 
-            System.out.println("++++  " + this.name + " and " + enemy.name + " combating | " + this.name + " Health : " + this.health + " | " + enemy.name + " Health : " + enemy.health  );
-            this.health -= enemy.power;
+                System.out.println("++++  " + this.name + " and " + enemy.name + " combating | " + this.name + " Health : " + this.health + " | " + enemy.name + " Health : " + enemy.health + " | "  + (  !enemy.killed || !this.killed  ));
+                this.health -= enemy.power;
 
-            Main.gameFrame.changeColor(locationX ,locationY , new Color(187, 0, 255), "");
+                Main.gameFrame.changeColor(locationX, locationY, new Color(187, 0, 255), "");
 
-            Thread.sleep(2000);
+//                synchronized (s) {
+                Thread.sleep(5000);
+//                }
+                enemy.health -= this.power;
 
-            enemy.health -= this.power;
 
+                checkCombatStatus(enemy);
 
-
-            checkCombatStatus(enemy);
 
 
             Main.gameFrame.updateTeamsStatus(this.team , enemy.team);
@@ -97,35 +97,45 @@ public abstract class GameObjects implements Serializable {
         if (enemy instanceof Heroes && ! enemy.killed)
             ((Heroes) enemy).move = true;
 
-//        Main.gameFrame.changeColor(this.locationX ,this.locationY , GameBoardPanel.defaultColor , "");
 
         continueCombat = true ;
     }
 
     private void checkCombatStatus( GameObjects enemy ){
 
+        if (this.health<=0 || enemy.health<=0){
+            continueCombat = false;
+            this.combating = false;
+            enemy.combating = false;
+
+        }
+
         if(this.health<=0 ){
             this.killed = true;
-//                this.team.gameObjects.remove(this);
-
             System.out.println("x");
-            enemy.combating = false;
-            continueCombat = false;
-            Main.gameFrame.changeColor(this.locationX ,this.locationY , GameBoardPanel.defaultColor , "");
+            Main.gameFrame.changeColor(this.locationX ,this.locationY , enemy.color , enemy.team.getTeamName());
         }
+
 
         if (enemy.health <=0){
             enemy.killed = true;
             System.out.println("x");
-
-//                enemy.team.gameObjects.remove(enemy);
-            this.combating = false;
-            continueCombat = false;
-            Main.gameFrame.changeColor(enemy.locationX ,enemy.locationY , GameBoardPanel.defaultColor , "");
+            Main.gameFrame.changeColor(enemy.locationX ,enemy.locationY , this.color , this.team.getTeamName());
         }
+
+
+        if (enemy.health <=0  && this.health<=0 )
+            Main.gameFrame.changeColor(enemy.locationX , enemy.locationY , GameBoardPanel.defaultColor , "");
+
     }
 
     public void setLocation(int x , int y){
+
+        for (GameObjects g : team.enemyCastle.getTeam().gameObjects){
+            if (g instanceof Heroes && g.combating  && g.locationX == x && g.locationY== y )   // hero stops if a combat happening in destination point
+                return;
+        }
+
         this.locationY = y ;
         this.locationX = x ;
     }
@@ -141,10 +151,6 @@ public abstract class GameObjects implements Serializable {
 
     public Team getTeam(){
         return this.team;
-    }
-
-    public void kill(){
-        this.killed = true;
     }
 
     public boolean isKilled(){

@@ -112,11 +112,14 @@ public class Main {
             if (g.killed)
                 continue;
             gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
+            g.combating = false;
         }
         for (GameObjects g : team2.getGameObjects()){
             if (g.killed)
                 continue;
             gameFrame.changeColor(g.getLocation()[0] , g.getLocation()[1] , g.color , g.getTeam().teamName);
+            g.combating = false;
+
         }
 
 
@@ -203,21 +206,32 @@ public class Main {
 
         if (team1.castle.killed) {
             System.out.println("-*-*-*-*-*-*-*-* Team 1 lose the game -*-*-*-*-*-*-*-* ");
-//                continueChecking = false;
 //                System.exit(0);
             gameFinished = true;
-            gameFrame.setVisible(false);
-            new GameFinishedDialog(new JFrame() , true , "Team 2 Wins");
+//            gameFrame.setVisible(false);
+            new GameFinishedDialog( "Team 2 Wins !");
         }
 
-//            System.out.println(team2.castle.killed);
         if (team2.castle.killed) {
             System.out.println("-*-*-*-*-*-*-*-* Team 2 lose the game -*-*-*-*-*-*-*-*");
-//                continueChecking = false;
 //                System.exit(0);
             gameFinished = true;
-            gameFrame.setVisible(false);
-            new GameFinishedDialog(new JFrame() , true , "Team 1 Wins");
+//            gameFrame.setVisible(false);
+            new GameFinishedDialog( "Team 1 Wins !");
+        }
+
+
+        if (team1.getNumberOfAliveHeroes() == 0 && ! team1.castle.killed && team2.getNumberOfAliveHeroes()  == 0 && ! team2.castle.killed ){
+
+            if (team2.castle.getHealth() > team1.castle.getHealth())
+                new GameFinishedDialog("Team 2 Wins !");
+
+            else if (team2.castle.getHealth() < team1.castle.getHealth() )
+                new GameFinishedDialog("Team 1 Wins !");
+
+            else
+                new GameFinishedDialog("No Winner !");
+
         }
 
     }
